@@ -1,0 +1,147 @@
+<button class="theme-toggle" (click)="toggleTheme()" [title]="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+  {{ isDark ? '☀' : '☾' }}
+</button>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="top-bar">
+    <div class="top-title">my<span>lists</span></div>
+    <button class="btn-secondary" *ngIf="auth.loggedIn$ | async" (click)="logout()">
+      Sign out
+    </button>
+  </div>
+
+  <!-- Create list -->
+  <div class="add-row">
+    <input
+      [(ngModel)]="newListName"
+      placeholder="New list name…"
+      (keydown.enter)="createList()"
+    />
+    <button class="btn-add" (click)="createList()">+ Add</button>
+  </div>
+
+  <div class="section-label">Your lists</div>
+
+  <!-- List cards -->
+  <div
+    class="card list-card"
+    *ngFor="let list of lists"
+    [class.active]="selectedList?.id === list.id"
+    (click)="editingListId !== list.id && selectList(list)"
+  >
+    <!-- Normal view -->
+    <div class="list-card-inner" *ngIf="editingListId !== list.id">
+      <div class="list-info">
+        <div class="list-name">{{ list.name }}</div>
+      </div>
+      <div class="list-actions">
+        <button class="btn-icon" (click)="startEdit(list); $event.stopPropagation()" title="Edit">✏</button>
+        <button class="btn-icon danger" (click)="deleteList(list); $event.stopPropagation()" title="Delete">🗑</button>
+      </div>
+    </div>
+
+    <!-- Edit view -->
+    <div class="list-edit-row" *ngIf="editingListId === list.id" (click)="$event.stopPropagation()">
+      <input
+        [(ngModel)]="editListName"
+        (keydown.enter)="saveEdit(list)"
+        (keydown.escape)="cancelEdit()"
+        autofocus
+      />
+      <button class="btn-icon" (click)="saveEdit(list)">Save</button>
+      <button class="btn-icon" (click)="cancelEdit()">✕</button>
+    </div>
+  </div>
+
+  <!-- Items panel -->
+  <div class="items-panel card" *ngIf="selectedList">
+    <div class="items-header">
+      <span class="items-title">{{ selectedList.name }}</span>
+    </div>
+
+  <!-- Add User to list  -->
+  <div class="add-row" style="margin-bottom: 14px;" *ngIf="selectedList.owner === currentUserId">
+    <input
+      [(ngModel)]="inviteUsername"
+      placeholder="Add a User…"
+      (keydown.enter)="addUser(selectedList.id)"
+    />
+    <button class="btn-add" (click)="addUser(selectedList.id)">+ Add</button>
+  </div>  
+
+    <!-- Add item -->
+    <div class="add-row" style="margin-bottom: 14px;">
+      <input
+        [(ngModel)]="newItemName"
+        placeholder="Add an item…"
+        (keydown.enter)="addItem()"
+      />
+      <button class="btn-add" (click)="addItem()">+ Add</button>
+    </div>
+
+    <!-- Item list -->
+    <ul class="items-list">
+      <li class="item-row" *ngFor="let item of items">
+
+        <!-- Checkbox + name / edit -->
+        <div class="item-left">
+          <div
+            class="checkbox"
+            [class.checked]="item.completed"
+            (click)="toggleItem(item)"
+          >
+            <span *ngIf="item.completed">✓</span>
+          </div>
+
+          <!-- Normal -->
+          <span
+            *ngIf="editingItemId !== item.id"
+            class="item-name"
+            [class.done]="item.completed"
+            (dblclick)="startItemEdit(item)"
+          >
+            {{ item.name }}
+          </span>
+
+          <!-- Edit -->
+          <input
+            *ngIf="editingItemId === item.id"
+            class="item-edit-input"
+            [(ngModel)]="editItemName"
+            (keydown.enter)="saveItemEdit(item)"
+            (keydown.escape)="cancelItemEdit()"
+          />
+        </div>
+
+        <!-- Item actions -->
+        <div class="item-actions">
+          <button
+            class="btn-icon"
+            *ngIf="editingItemId === item.id"
+            (click)="saveItemEdit(item)"
+          >Save</button>
+          <button
+            class="btn-icon"
+            *ngIf="editingItemId === item.id"
+            (click)="cancelItemEdit()"
+          >✕</button>
+          <button
+            class="btn-icon"
+            *ngIf="editingItemId !== item.id"
+            (click)="startItemEdit(item)"
+          >✏</button>
+          <button
+            class="btn-icon danger"
+            (click)="deleteItem(item.id)"
+          >🗑</button>
+        </div>
+
+      </li>
+    </ul>
+
+    <p class="empty-state" *ngIf="items.length === 0">No items yet — add one above!</p>
+  </div>
+
+</div>

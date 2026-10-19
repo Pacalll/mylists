@@ -1,0 +1,21 @@
+# Python
+backend/venv_backend/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/static/*
+!backend/static/.gitkeep
+*.pyc
+
+
+# Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Sonstiges
+.env
+*.env
+**/.vscode/
+
+# Docker
+postgres_data/
