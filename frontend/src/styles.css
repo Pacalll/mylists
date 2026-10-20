@@ -1,21 +1,26 @@
 @font-face {
   font-family: 'DM Sans';
-  src: url('/assets/fonts/dm-sans-regular.woff2') format('woff2');
+  src: url('/assets/fonts/DMSans-Regular.ttf') format('truetype');
   font-weight: 400;
 }
 @font-face {
   font-family: 'DM Sans';
-  src: url('/assets/fonts/dm-sans-500.woff2') format('woff2');
+  src: url('/assets/fonts/DMSans-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 @font-face {
   font-family: 'DM Sans';
-  src: url('/assets/fonts/dm-sans-600.woff2') format('woff2');
+  src: url('/assets/fonts/DMSans-SemiBold.ttf') format('truetype');
   font-weight: 600;
 }
 @font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/DMSans-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+@font-face {
   font-family: 'DM Serif Display';
-  src: url('/assets/fonts/dm-serif-display-regular.woff2') format('woff2');
+  src: url('/assets/fonts/DMSerifDisplay-Regular.ttf') format('truetype');
   font-weight: 400;
 }
 
