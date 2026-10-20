@@ -1,4 +1,23 @@
-/*@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display&display=swap');
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/dm-sans-regular.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/dm-sans-500.woff2') format('woff2');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/dm-sans-600.woff2') format('woff2');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'DM Serif Display';
+  src: url('/assets/fonts/dm-serif-display-regular.woff2') format('woff2');
+  font-weight: 400;
+}
 
 /* ── Theme tokens ── */
 :root {
