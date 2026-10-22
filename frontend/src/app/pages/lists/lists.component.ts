@@ -53,6 +53,7 @@ export class ListsComponent implements OnInit {
   }
 
   deleteList(list: any) {
+    if (!confirm(`Really delete "${list.name}" ?`)) return;
     this.api.deleteList(list.id).subscribe(() => {
       this.lists = this.lists.filter(l => l.id !== list.id);
         if (this.selectedList?.id === list.id) this.selectedList = null;
@@ -88,7 +89,8 @@ export class ListsComponent implements OnInit {
   // ── Items ──────────────────────────────────────────────
   loadItems() {
     this.api.getItems().subscribe((res: any) => {
-      this.items = res.filter((i: any) => i.shopping_list === this.selectedList.id);
+      const filtered = res.filter((i: any) => i.shopping_list === this.selectedList.id);
+      this.items = this.sortItems(filtered);
     });
   }
 
@@ -120,7 +122,10 @@ export class ListsComponent implements OnInit {
   }
 
   toggleItem(item: any) {
-    this.api.toggleItem(item).subscribe(() => item.completed = !item.completed);
+    this.api.toggleItem(item).subscribe(() => {
+      item.completed = !item.completed;
+      this.items = this.sortItems(this.items);
+    });
   }
 
   deleteItem(id: number) {
@@ -139,7 +144,15 @@ export class ListsComponent implements OnInit {
         this.inviteUsername = '';
       },
       error: () => alert('User not found')
-  });
-  
-}
+    });
+  }
+
+  private sortItems(items: any[]): any[] {
+    return [...items].sort((a: any, b: any) => {
+      if (a.completed !== b.completed) {
+        return a.completed ? 1 : -1;
+      }
+      return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    });
+  }
 }

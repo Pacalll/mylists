@@ -126,7 +126,7 @@ input {
   padding: 10px 14px;
   color: var(--text);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 16px;
   outline: none;
   transition: border-color var(--transition), background var(--transition);
   width: 100%;
