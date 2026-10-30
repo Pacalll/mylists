@@ -21,6 +21,12 @@ export class AuthService {
   }
 
   logout() {
+    /*
+      Clear all caches and remove the access token from localStorage
+    */
+    caches.keys().then(keys =>
+       keys.filter(k => k.includes(':data:')).forEach(k => caches.delete(k))
+    );
     localStorage.removeItem('access');
     this.loggedIn.next(false);
     this.router.navigate(['/']);
