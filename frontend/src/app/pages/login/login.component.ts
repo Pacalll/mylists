@@ -20,7 +20,7 @@ export class LoginComponent {
   login() {
     this.api.login(this.username, this.password).subscribe({
       next: (res: any) => {
-        this.auth.login(res.access);
+        this.auth.login(res.access, res.refresh);
         this.router.navigate(['/lists']);
       },
       error: () => {
